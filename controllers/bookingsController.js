@@ -14,7 +14,18 @@ const postBooking = async (request, response) => {
     response.status(500).json({ message: "Internal server error", error });
   }
 };
+const getBookingsOfUser = (userId) => {
+    try {
+      const bookingsOfUser = Booking.find({ userId: userId });
+  
+      return bookingsOfUser;
+    } catch (error) {
+      throw new Error(`Error fetching bookings for user ${userId}: ${error.message}`);
+    }
+  
+};
 
 module.exports = {
   postBooking,
+  getBookingsOfUser
 };
