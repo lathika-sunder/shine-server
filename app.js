@@ -1,30 +1,23 @@
-const express=require('express')
-const app=express()
-const router=express.Router()
-const cors=require('cors')
-const connection=require('./db/connect')
-const bookingsRouter=require('./routes/bookingsRoute')
+const express = require('express');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const connection = require('./db/connect');
+const bookingsRouter = require('./routes/bookingsRoute');
 
-app.use(cors())
-app.use(express.json())
+dotenv.config();
 
-app.use('/api/v1/shine',router)
-app.use('/api/v1/shine/bookings',bookingsRouter)
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-const dotenv=require('dotenv')
-dotenv.config()
+app.use(cors());
+app.use(express.json());
 
-const PORT=process.env.PORT
+app.get('/api/v1/shine', (req, res) => {
+    res.send("Welcome to Shine's Server");
+});
 
-app.listen(PORT,()=>{
-    console.log('App listening on port',PORT)
-})
+app.use('/api/v1/shine/bookings', bookingsRouter);
 
-app.get('/api/v1/shine',(request,response)=>{
-    response.send("Welcome to Shine's Server")
-})
-
-
-
-
-
+app.listen(PORT, () => {
+    console.log(`App listening on port ${PORT}`);
+});
